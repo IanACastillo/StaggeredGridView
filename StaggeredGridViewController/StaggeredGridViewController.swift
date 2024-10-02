@@ -1,3 +1,10 @@
+//
+//  StaggeredGridViewController.swift
+//  StaggeredGridViewController
+//
+//  Created by Ian Castillo on 10/2/24.
+//
+
 import UIKit
 
 class StaggeredGridViewController: UIViewController {
