@@ -9,6 +9,10 @@ import UIKit
 
 class StaggeredGridViewController: UIViewController {
     
+    // Reusable pool for views to optimize memory usage
+    private var viewPool: [UIView] = []
+    private var iconCache: [String: UIImage] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +40,7 @@ class StaggeredGridViewController: UIViewController {
             mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // Ensure stack view has the same width
         ])
         
         // Add Rows (Horizontal StackViews) with items
@@ -50,13 +54,11 @@ class StaggeredGridViewController: UIViewController {
     func createRow() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally  // Allow items to take up different widths
+        stackView.distribution = .fillProportionally
         stackView.spacing = 10
         
-        // Randomize the number of items in the row for more irregularity
         let itemCount = Int(arc4random_uniform(3)) + 2
         
-        // Add items to this row with varying widths and heights
         for _ in 0..<itemCount {
             let view = createStaggeredView(widthMultiplier: CGFloat(arc4random_uniform(2) + 1), heightMultiplier: CGFloat(arc4random_uniform(2) + 1))
             stackView.addArrangedSubview(view)
@@ -67,21 +69,33 @@ class StaggeredGridViewController: UIViewController {
     
     // Create each grid item with a different width, height, and an icon
     func createStaggeredView(widthMultiplier: CGFloat, heightMultiplier: CGFloat) -> UIView {
-        let view = UIView()
+        // Reuse views from the pool to optimize memory
+        let view: UIView
+        if let reusableView = viewPool.popLast() {
+            view = reusableView
+            view.subviews.forEach { $0.removeFromSuperview() }  // Clean up previous icon
+        } else {
+            view = UIView()
+        }
+        
         view.backgroundColor = randomColor()
         
         view.widthAnchor.constraint(equalToConstant: 80 * widthMultiplier).isActive = true
         view.heightAnchor.constraint(equalToConstant: 100 * heightMultiplier).isActive = true
         
+        // Add an icon (UIImageView) inside the view
         let iconImageView = UIImageView()
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
         iconImageView.tintColor = .white
         
-        if let icon = randomIcon() {
-            iconImageView.image = icon
+        let iconName = randomIconName()
+        if let cachedIcon = iconCache[iconName] {
+            iconImageView.image = cachedIcon
         } else {
-            iconImageView.image = UIImage(systemName: "questionmark.circle") // Fallback icon if no random icon
+            let newIcon = UIImage(systemName: iconName)
+            iconImageView.image = newIcon
+            iconCache[iconName] = newIcon  // Save it in the cache
         }
         
         view.addSubview(iconImageView)
@@ -105,20 +119,20 @@ class StaggeredGridViewController: UIViewController {
         return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
     
-    // Utility function to get random SF Symbols icons
-    func randomIcon() -> UIImage? {
+    // Utility function to get random SF Symbols icon names
+    func randomIconName() -> String {
         let icons = [
-            "message.fill",
-            "phone.fill",
-            "envelope.fill",
-            "gearshape.fill",
-            "wifi",
-            "bluetooth",
-            "airplane",
-            "bell.fill"      
+            "message.fill",  // Message icon
+            "phone.fill",    // Phone icon
+            "envelope.fill", // Mail icon
+            "gearshape.fill",// Settings icon
+            "wifi",          // Wi-Fi icon
+            "bluetooth",     // Bluetooth icon
+            "airplane",      // Airplane icon
+            "bell.fill"      // Notification/Bell icon
         ]
         
         let randomIndex = Int(arc4random_uniform(UInt32(icons.count)))
-        return UIImage(systemName: icons[randomIndex])
+        return icons[randomIndex]
     }
 }
