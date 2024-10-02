@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4891930E2CADA78600CB3390 /* StaggeredGridViewControllerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4891930D2CADA78600CB3390 /* StaggeredGridViewControllerApp.swift */; };
-		489193102CADA78600CB3390 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4891930F2CADA78600CB3390 /* ContentView.swift */; };
 		489193122CADA78900CB3390 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 489193112CADA78900CB3390 /* Assets.xcassets */; };
 		489193162CADA78900CB3390 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 489193152CADA78900CB3390 /* Preview Assets.xcassets */; };
 		489193202CADA78900CB3390 /* StaggeredGridViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4891931F2CADA78900CB3390 /* StaggeredGridViewControllerTests.swift */; };
 		4891932A2CADA78900CB3390 /* StaggeredGridViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489193292CADA78900CB3390 /* StaggeredGridViewControllerUITests.swift */; };
 		4891932C2CADA78900CB3390 /* StaggeredGridViewControllerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4891932B2CADA78900CB3390 /* StaggeredGridViewControllerUITestsLaunchTests.swift */; };
+		489193392CADA83800CB3390 /* StaggeredGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489193382CADA83800CB3390 /* StaggeredGridViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,6 @@
 /* Begin PBXFileReference section */
 		4891930A2CADA78500CB3390 /* StaggeredGridViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StaggeredGridViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4891930D2CADA78600CB3390 /* StaggeredGridViewControllerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredGridViewControllerApp.swift; sourceTree = "<group>"; };
-		4891930F2CADA78600CB3390 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		489193112CADA78900CB3390 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		489193132CADA78900CB3390 /* StaggeredGridViewController.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StaggeredGridViewController.entitlements; sourceTree = "<group>"; };
 		489193152CADA78900CB3390 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -45,6 +44,7 @@
 		489193252CADA78900CB3390 /* StaggeredGridViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StaggeredGridViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		489193292CADA78900CB3390 /* StaggeredGridViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredGridViewControllerUITests.swift; sourceTree = "<group>"; };
 		4891932B2CADA78900CB3390 /* StaggeredGridViewControllerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredGridViewControllerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		489193382CADA83800CB3390 /* StaggeredGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredGridViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				4891930D2CADA78600CB3390 /* StaggeredGridViewControllerApp.swift */,
-				4891930F2CADA78600CB3390 /* ContentView.swift */,
+				489193382CADA83800CB3390 /* StaggeredGridViewController.swift */,
 				489193112CADA78900CB3390 /* Assets.xcassets */,
 				489193132CADA78900CB3390 /* StaggeredGridViewController.entitlements */,
 				489193142CADA78900CB3390 /* Preview Content */,
@@ -259,8 +259,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				489193102CADA78600CB3390 /* ContentView.swift in Sources */,
 				4891930E2CADA78600CB3390 /* StaggeredGridViewControllerApp.swift in Sources */,
+				489193392CADA83800CB3390 /* StaggeredGridViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
