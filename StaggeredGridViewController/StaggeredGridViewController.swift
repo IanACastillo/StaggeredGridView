@@ -1,10 +1,3 @@
-//
-//  StaggeredGridViewController.swift
-//  StaggeredGridViewController
-//
-//  Created by Ian Castillo on 10/2/24.
-//
-
 import UIKit
 
 class StaggeredGridViewController: UIViewController {
@@ -16,15 +9,15 @@ class StaggeredGridViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // ScrollView
+        // ScrollView to hold the entire layout
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         
-        // Vertical StackView (Main container)
+        // Main horizontal stack view to hold the columns
         let mainStackView = UIStackView()
-        mainStackView.axis = .vertical
-        mainStackView.distribution = .fill
+        mainStackView.axis = .horizontal
+        mainStackView.distribution = .fillEqually  // Evenly distribute columns
         mainStackView.spacing = 10
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(mainStackView)
@@ -40,34 +33,64 @@ class StaggeredGridViewController: UIViewController {
             mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // Ensure stack view has the same width
+            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)  // Match the scrollView width
         ])
         
-        // Add Rows (Horizontal StackViews) with items
-        for _ in 0..<10 {
-            let horizontalStackView = createRow()
-            mainStackView.addArrangedSubview(horizontalStackView)
+        // Determine the number of columns based on the device size
+        let columnCount = calculateColumnCount()
+        
+        // Add vertical stack views for columns
+        for _ in 0..<columnCount {
+            let columnStackView = createColumn()
+            mainStackView.addArrangedSubview(columnStackView)
         }
     }
     
-    // Create a horizontal row of items
-    func createRow() -> UIStackView {
+    // Function to calculate the number of columns based on device width
+    func calculateColumnCount() -> Int {
+        let screenWidth = UIScreen.main.bounds.width
+        
+        // iPad Pro 13-inch: Wider screen, more columns
+        if screenWidth >= 1024 {
+            return 6  // More columns for iPad Pro
+        }
+        
+        // iPhone SE: Narrower screen, fewer columns
+        return 3  // Fewer columns for iPhone SE
+    }
+    
+    // Create a vertical column stack of items
+    func createColumn() -> UIStackView {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
+        stackView.axis = .vertical
+        stackView.distribution = .fill
         stackView.spacing = 10
         
-        let itemCount = Int(arc4random_uniform(3)) + 2
+        // Generate more items for larger devices (more content to scroll)
+        let itemCount = calculateItemCount()
         
         for _ in 0..<itemCount {
-            let view = createStaggeredView(widthMultiplier: CGFloat(arc4random_uniform(2) + 1), heightMultiplier: CGFloat(arc4random_uniform(2) + 1))
+            let view = createStaggeredView(widthMultiplier: 1, heightMultiplier: CGFloat(arc4random_uniform(3) + 1))  // Different height for each item
             stackView.addArrangedSubview(view)
         }
         
         return stackView
     }
     
-    // Create each grid item with a different width, height, and an icon
+    // Function to calculate the number of items per column based on device size
+    func calculateItemCount() -> Int {
+        let screenHeight = UIScreen.main.bounds.height
+        
+        // For iPad Pro (more items to scroll)
+        if screenHeight >= 1366 {
+            return 20  // More items for iPad Pro 13-inch
+        }
+        
+        // For iPhone SE (fewer items to scroll)
+        return 10  // Fewer items for iPhone SE
+    }
+    
+    // Create each grid item with a different height and icon
     func createStaggeredView(widthMultiplier: CGFloat, heightMultiplier: CGFloat) -> UIView {
         // Reuse views from the pool to optimize memory
         let view: UIView
@@ -80,6 +103,7 @@ class StaggeredGridViewController: UIViewController {
         
         view.backgroundColor = randomColor()
         
+        // Set width and height constraints
         view.widthAnchor.constraint(equalToConstant: 80 * widthMultiplier).isActive = true
         view.heightAnchor.constraint(equalToConstant: 100 * heightMultiplier).isActive = true
         
