@@ -62,3 +62,5 @@ The project is designed with performance and memory optimization in mind, focusi
 
 - **Icon Caching**:
   - Icons are cached in a dictionary so that the same icon is not recreated multiple times. This improves memory efficiency and ensures smoother scrolling performance.
+ 
+![Simulator Screenshot - iPad Pro 13-inch (M4) - 2024-10-02 at 11 41 49](https://github.com/user-attachments/assets/1694b6ef-c2ba-4422-8c0d-431d94b0d79c)
